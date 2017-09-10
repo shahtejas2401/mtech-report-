@@ -1,0 +1,24 @@
+\chapter{ALGORITHM FOR GRAPHS}
+\label{chap:graph}
+ 
+In this chapter we discuss about our proposed algorithm for graphs. 
+Given is a Graph $G \equiv (V,E)$ where $V$ is total number of vertices and $E$ is total number of edges.
+
+Since the drawback of proposed algorithm of DAG was huge memory requirement so it is not feasible to apply the same algorithm for graphs. 
+We observed that Brandes' algorithm makes a vertex as a source and performs SSSP for every vertex. But if we select an order such that we can reuse partial graph which are same for both the vertices. Such an ordering is possible, if we compute SSSP for vertex $v$ then for any neighbour $u$ of $v$ we can reuse that garph partially, provided that $u$ has not yet been considered for SSSP. Similarly, $u$'s graph can be reused for all its neighbours if they are not considered for SSSP.
+
+For a source $w$, the graph which will be formed while SSSP has edges classified at every vertex as $parent$, $cousins$, $children$.
+For source $w$, its $parent$ and $cousins$ will remain empty set.
+So a vertex $u$ which is not yet considered for SSSP and is neighbour of source $v$ can be ordered such that it becomes the next source. So to make SSSP graph of $u$, we will reuse SSSP graph of $v$.
+
+Now to compute SSSP graph of $u$, $u$ becomes the source and its subtree in graph of $v$ remains unchanged. If there are any $cousins$ from subtree to outside of subtree then they will be $children$ in the new graph. These newly converted $children$'s $cousins$ will change to $children$.
+If there is an edge from a vertex which does not belong to its subtree  to a vertex which is part of subtree then they will be cousins.
+Hence, we can construct SSSP graph using for $u$ using SSSP graph for $v$.
+$\sigma$ values can be easily calculated while making and breaking the links. Then we will apply back propagation phase of Brandes' algorithm to calculate Betweenness Centrality. 
+
+The issue with this algorithm is that it takes up a huge amount of space as we need to store graphs for each vertex.  
+
+
+
+
+

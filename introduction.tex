@@ -1,0 +1,22 @@
+\chapter{INTRODUCTION}
+\label{chap:intro}
+\section{Overview}
+
+In social network analysis, graph-theoretic concepts are used to understand and explain social phenomena. A social network consists of actors which may or may not share a relation amongst them. An important metric for the analysis of social networks are centrality which are based on the vertices of the graph. The centrality metric ranks the actors of the network according to their importance in the social structure. One such centrality is betweenness. 
+
+In graph theory, betweenness centrality in a graph is a metric based on shortest paths. For each pair of vertices in a connected graph, there exists at least one shortest path between them. This shortest path is determined by the fact that for unweighted graphs, the number of edges that the path passes through is minimized and for weighted graphs, the sum of the weights of the edges is minimized. So for a vertex $v$, the betweenness centrality $bc[v]$ is sum of ratio of the number of shortest paths between any pair of vertices $s$ and $t$, other than vertex $v$ which passes through $v$ and total number of shortest paths between $s$ and $t$.
+The betweenness centrality of a vertex $v$ is given by the expression:
+
+\[bc[v] = \sum_{s\neq v,v \neq t,s\neq t} \sigma_{st}(v) / \sigma_{st}\]
+
+where $\sigma_{st}$ is the total number of shortest paths from node $s$ to node $t$ and $\sigma_{st}(v)$ is the number of those paths that pass through $v$.
+
+\vspace{-1.0em}
+\section{Motivation}
+\vspace{-1.0em}
+Betweenness centrality has applications in various fields such as community detection, power grid contingency analysis, and the study of the human brain. This analyses have high computational cost that prevents the examination of large graphs of size of few million vertices and billion edges. Motivated by the fast-growing need to compute betweenness centrality on such large, yet very sparse graphs, new algorithms for computing betweenness centrality are introduced to reduce the overall execution time. 
+
+\vspace{-1.0em}
+\section{Organization of the Thesis}
+\vspace{-1.0em}
+Chapter \ref{chap:lit} discusses the previous works in this area and places the proposed work in context. In Chapter \ref{chap:dpp}, new algorithm specifically for trees is proposed which reduces the execution time by factor of number of vertices in tree. Another algorithm specifically for DAG is proposed which is detailed in Chapter \ref{chap:sup}. In chapter \ref{chap:graph}, another algorithm is proposed for graphs which reuses the partial computed values but doesn't improves the execution time. As a part of future work, we plan to implement the existing best work for calculating betweenness centrality which is Brandes' Algorithm as described in section 1.1 in parallel on GPU using CUDA. We also plan to approximate the betweenness centrality in parallel implementation and further reduce the execution time with some loss of precision in exact values of betweenness centrality. Chapter \ref{chap:concl} concludes the work with analysis and future direction.
