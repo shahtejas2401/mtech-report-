@@ -71,10 +71,17 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% Geometry and page layout
-\RequirePackage[compat2,a4paper,left=1.5in,right=1in,top=1in,bottom=0.667in,
-                nohead]{geometry}[2002/07/08]
-\parskip 8pt
+%\RequirePackage[compat2,a4paper,left=1.5in,right=1in,top=1in,bottom=0.667in,
+                %nohead]{geometry}[2002/07/08]
+%\parskip 8pt
 
+\RequirePackage[%compat2,
+a4paper,text={15.42cm,
+23cm},nohead,left=1.3in,right=1in,top=1.3in,
+footskip=30pt,bottom=1in]{geometry}
+\parskip 8pt
+\setlength\oddsidemargin{0.52cm}
+\setlength\evensidemargin{0.6cm}
 \renewcommand{\@pnumwidth}{2.5em}
 %\renewcommand{\@tocrmarg}{2.5em}
 
@@ -84,7 +91,8 @@
 %% makes all tables and figures have single spacing automatically.
 \RequirePackage{setspace} 
 \RequirePackage{atbeginend} % used to redefine the list environs
-\setstretch{1.5}
+%\setstretch{1.5}
+\setstretch{1.8}
 
 \BeforeBegin{itemize}{\vspace*{-5ex}\begin{singlespace}}
 \AfterEnd{itemize}{\end{singlespace}}
@@ -94,7 +102,6 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %% The figure captioning is done correctly via the hang option.
-%%\RequirePackage[hang]{caption2}  -> TeX generates error
 \RequirePackage[hang]{caption}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -102,16 +109,18 @@
 % 
 % natbib allows easy switching of citation style and using it along
 % with the iitm.bst makes things perfect.
-\RequirePackage[authoryear,round]{natbib} 
-%\RequirePackage[numbers,square]{natbib} 
-\bibliographystyle{iitm}
 
-\newcommand{\bibstyle@iitm}{\bibpunct{(}{)}{;}{a}{,}{,}%
-     \gdef\NAT@biblabel##1{##1. }}
-%
-\setlength{\bibhang}{0pt}
-\citestyle{iitm}
-%\citestyle{unsrt_newen}
+% Changed back to natbib standard - Vimal
+%\RequirePackage[square,numbers,sort]{natbib}
+%\bibliographystyle{iitm}
+
+%\RequirePackage[square,authoryear]{natbib}
+%\bibliographystyle{iitm}
+%\newcommand{\bibstyle@iitm}{\bibpunct{(}{)}{;}{a}{,}{,}%
+%    \gdef\NAT@biblabel##1{##1. }}
+% 
+% \setlength{\bibhang}{0pt}
+% \citestyle{iitm}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -120,12 +129,10 @@
 % \department{department name} -- user macro to declare name of department.
 \def\department#1{\gdef\@department{#1}}
 
-%\RequirePackage[dvips]{graphicx}
-
+\RequirePackage{graphicx}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The title page
-
 \def\maketitle{%
   \pagenumbering{roman}
   \thispagestyle{empty}
@@ -196,13 +203,15 @@
 
   \vspace*{0.75in}
   %\centerline{\psfig{figure=emblem.ps}}
-%  \centerline{\includegraphics{iitm.eps}}
-  \centerline{\includegraphics[scale=1.]{iitm}}
+  \centerline{\includegraphics[scale=0.3]{iitm.eps}}
+  %\centerline{\includegraphics[scale=0.3]{iitm.pdf}}
   \vspace*{-0.15in}
   \begin{center}
-    {\bf \large DEPARTMENT OF \@department\par}
+    {\bf \large DEPARTMENT OF \MakeUppercase{\@department}\par}
+ %   {\bf \large INDIAN INSTITUTE OF TECHNOLOGY, MADRAS.}
     {\bf \large INDIAN INSTITUTE OF TECHNOLOGY MADRAS.}
     \vglue 0.50em
+    \vspace{10pt}  
     {\bf \large \@date}\par
   \end{center}
   \parskip 8pt
@@ -234,7 +243,7 @@
    \def\certificate{%% A preliminary chapter
      \clearpage
      \vspace*{36pt}
-         \centerline{\Large \bf THESIS CERTIFICATE}
+     \centerline{\Large \bf THESIS CERTIFICATE}
      \vskip 25pt
      \thispagestyle{empty}
      \typeout{Certificate}
@@ -314,7 +323,7 @@
        \def\committee{\chapter*{\centerline{DOCTORAL COMMITTEE}}}
    \else
        \if@MS
-          \def\committee{\chapter*{\centerline{GENERAL TEST COMITTEE}}}}
+          \def\committee{\chapter*{\centerline{GENERAL TEST COMITTEE}}}
         \fi
    \fi
 

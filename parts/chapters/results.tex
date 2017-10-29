@@ -1,0 +1,73 @@
+\chapter{Experimental Results}
+\label{chap:results}
+
+We conducted an experimental evaluation of our algorithms, with two major driving goals in mind: study the behavior of the algorithms presented in this paper and compare it with that of state of art algorithm \ref{algo:brande} in terms of execution time.
+
+\section{Implementation and environment}
+We implemented our algorithms and the one presented in algorithm \ref{algo:brande} on IITM's Libra cluster node which has 74GB ram size and using 18GB as maximum heap space. 
+
+\vspace{-1.5em}
+\section{Results}
+We have compared our algorithm with Brandes' algorithm and we found that there is huge reduction in execution time.
+\vspace{-1.0em}
+\subsection{Results for Algorithm on Tree}
+The trees used for the experimental purposes are synthetic trees made through random functions.
+As we can see in table \ref{tab:res1}, that as per increase in the number of vertices of the tree, the time taken by Brandes' algorithm increases to a large extent as compared to proposed algorithm. This proves the basis which we stated to reduction in  time complexity for computing betweenness centrality for trees. 
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|}
+\hline
+No.of vertices & Proposed algorithm on tree & Brandes' algorithm \\
+\hline
+ & Time in ns & Time in ns\\ 
+\hline
+2000 & 108175589 & 76791051421 \\ 
+\hline
+4000 & 110450761 & 387301630614 \\ 
+\hline
+6000 & 120499273 & 1093484042473 \\ 
+\hline
+8000 & 134970756 & 2005514757385 \\ 
+\hline
+\end{tabular}
+\caption{Comparison of Brandes' algorithm with our algorithm}
+\label{tab:res1}
+\end{table}
+
+\subsection{Results for Algorithm on DAGs}
+The trees used for the experimental purposes are synthetic trees made through random functions.
+As we can see in table \ref{tab:res1}, that as per increase in the number of vertices of the tree, the time taken by Brandes' algorithm increases and the time required by our algorithm increases to a large extent but still is less than Brandes' algorithm. As the number of vertices are increased, not much performance gain is achieved because we use huge memory and once the memory is used up, the program takes huge amount of time swapping the memory in and out of ram. Also for more higher number of vertices, our algorithm doesn't work the heap space provided.
+Hence we can conclude that, if given enough memory to compute betweenness centrality, our proposed algorithm beats the Brandes' algorithm.
+
+
+\begin{table}[h!]
+\centering
+\begin{tabular}{|c|c|c|c|}
+\hline
+No.of vertices & No.of edges & Proposed algorithm on DAG & Brandes' algorithm \\
+\hline
+ & & Time in ns & Time in ns\\ 
+\hline
+20000 & 91207 & 57927664569 & 120239411956 \\ 
+\hline
+25000 & 111852 & 88914295841 & 206825800469 \\ 
+\hline
+27000 & 121079 & 109585676633 & 246413985818 \\ 
+\hline
+30000 & 134769 & 124939881885 & 285926048584 \\ 
+\hline
+32000 & 144339 & 141941467652 & 336415443364 \\ 
+\hline
+36000 & 163172 & 246004717907 & 391164367990 \\ 
+\hline
+37000 & 165877 & 333386605803 & 429938532146 \\ 
+\hline
+38000 & 170896 & 435153434414 & 479553177044 \\ 
+\hline
+40000 & 179765 & 625092042171 & 626296047344 \\ 
+\hline
+\end{tabular}
+\caption{Comparison of Brandes' algorithm with our algorithm}
+\label{tab:res1}
+\end{table}

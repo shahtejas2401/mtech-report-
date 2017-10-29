@@ -1,0 +1,81 @@
+
+\chapter{Brandes' Algorithm for computing Betweenness Centrality}
+\label{chap:lit}
+
+Given a connected graph $G \equiv (V,E)$ where $V$ is total number of vertices and $E$ is total number of edges, let  $\sigma_{st}$  be the number of shortest paths from a source $s$ $\in$ $V$ to a target $t\in V$. Let $\sigma_{st} (v)$ be the number of such $s$ $\rightarrow$ $t$ paths passing through a vertex $v \in V $, $v \neq s,v \neq t$. Let the pair dependency of $v$ to $<s$, $t>$ pair be
+the fraction $\Delta_{st}(v) =\sigma_{st}(v) / \sigma_{st}$. The betweenness centrality of $v$ is defined by
+\begin{equation} \label{eq1}
+bc[v]={\sum_{s \neq v,v \neq t,s \neq t}}  \Delta_{st}(v)   
+\end{equation}
+
+Since there are $O$($n^2$) pairs in $V$, one needs $O$($n^3$) operations to compute $bc[v]$ for all $v \in V$ by using Equation \ref{eq1}. Brandes reduced this complexity and proposed an $O(mn)$ algorithm for unweighted networks. The algorithm is based on the accumulation of pair dependencies over target vertices.
+After accumulation, the dependency of $v$ to $s \in V$ is 
+\vspace{-0.1em}
+\begin{equation} \label{eq2}
+\Delta_{s}(v) = {\sum_{t \in V}}\Delta_{st}(v)
+\end{equation}
+
+Let $P_{s}(u)$ be the set of parents of $u$ on the shortest paths from $s$ to all the vertices in $V$. That is,\[  P_{s}(u) = \\{v \in V : (v, u) \in E, d_{s}(u)=d_{s}(v)+ 1\\} \]
+where $d_{s}(u)$ and $d_{s}(v)$ are the shortest distances from $s$ to $u$ and $v$, respectively.
+$P_{s}$ defines the shortest paths graph rooted in $s$. Brandes' observed that the accumulated dependency values can be computed recursively:
+\begin{equation} \label{eq3}
+\Delta_{s}(v) = \sum_{u:v \in P_{s}(u)} (\Delta_{s}(u)+1)*\sigma_{sv}/\sigma_{su}
+\end{equation}
+To compute $\Delta_{s}(v)$ for all $v \in V$ except $s$, Brandes' algorithm uses a two-phase approach:
+
+First, a breadth first search (BFS) is initiated from $s$ to compute $\sigma_{sv}$ and $P_{s}(v)$ for each $v$. Then, in a back propagation phase, $\Delta_{s}(v)$ is computed for all $v \in V$ in a bottom-up manner by using Equation \ref{eq3}.
+In the first phase, the algorithm computes $\sigma[v]$ for $v \in V$ which is the number of shortest paths from the source vertex $s$ to $v$. In addition, the parents of $v$ on these shortest paths are stored in $P[v]$. Before the second phase, the algorithm initializes $\delta[v]$ to 0. 
+In the back propagation phase, the $\delta$  values are calculated and are added to the centrality values.
+
+Both the phases of Algorithm \ref{algo:brande} considers all the edges at most once, taking $O(m + n)$ time. The phases are repeated for each vertex as the source. The overall time complexity is $O(mn)$.
+
+\begin{algorithm}
+\caption{Brandes' Sequential Algorithm}
+\label{algo:brande}
+
+%\KwResult{Write here the result }
+$bc[v] \leftarrow$ 0, $v \in V$\;
+\For{$s \in V$}{
+%$S$ $\leftarrow$ emptystack \;
+%$P[w] \leftarrow$ empty list, $w \in V$\;
+%$\sigma[t] \leftarrow$ 0, $t \in V$;  $\sigma[s] \leftarrow$ 1\;
+%$d[t] \leftarrow$ -1, $t \in V$;  $d[s] \leftarrow$ 0\;
+%$Q$ $\leftarrow$ emptyqueue \;
+Forward phase: BFS from $s$ \\
+$Q.$enqueue($s$)\;
+\While{$Q$ not empty}{
+$v \leftarrow Q$.dequeue()\;
+$S.$push($v$)\;
+\For {each neighbour $w$ of $v$}{
+\If{$d[w]$ < 0}{
+$Q.$enqueue($w$)\;
+$d[w] \leftarrow d[v]$ + 1\;
+}
+\If{$d[w] = d[v]$ + 1}{
+$\sigma[w] \leftarrow \sigma[w] + \sigma[v]$\;
+$P[w].$append($v$)\;
+}
+}
+}
+
+Backward phase: Back propagation \\
+$\delta[v] \leftarrow$ 0, $v \in V$\;
+
+
+ \While{$S$ not empty}{
+ $w \leftarrow S.$pop()\; 
+ \For{$v \in P[w]$}{
+ $\delta[v] \leftarrow \delta[v]+ (1+\delta[w])*\sigma[v]/\sigma[w]$\;
+ }
+  \If{$w \neq s$}{
+  $bc[w] \leftarrow bc[w]+\delta[w]$\;
+   }
+ }
+ }
+\end{algorithm}
+\vspace{-1.0em}
+\section{Relevance of the Work Proposed in this Thesis}
+Brandes' Algorithm is by far the best known, simple and efficient algorithm for computing exact values of betweenness centrality for graphs. Various algorithms are proposed with pre-processing the graphs but this algorithm uses simplistic approach to calculate BC, In this thesis, we have considered this algorithm as benchmark for comparing our results. 
+The work proposed in this thesis aims to improve execution time by proposing variants of the algorithm for trees, DAGs and graphs.
+
+
